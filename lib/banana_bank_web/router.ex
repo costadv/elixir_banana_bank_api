@@ -1,6 +1,8 @@
 defmodule BananaBankWeb.Router do
   use BananaBankWeb, :router
 
+  @crud [:create, :show, :update, :delete]
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -9,6 +11,8 @@ defmodule BananaBankWeb.Router do
     pipe_through :api
 
     get "/", WelcomeController, :index
+
+    resources "/users", UsersController, only: @crud
   end
 
   # Enable LiveDashboard in development
