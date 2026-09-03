@@ -9,8 +9,7 @@ defmodule BananaBank.Users.Create do
     |> handle_insert()
   end
 
-  defp handle_insert(_) do
-
-  end
+  defp handle_insert({:ok, user}), do: user
+  defp handle_insert({:error, changeset}), do: changeset
 
 end
