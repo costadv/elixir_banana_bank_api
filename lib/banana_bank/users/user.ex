@@ -29,7 +29,7 @@ defmodule BananaBank.Users.User do
   defp add_password_hash(%Ecto.Changeset{
     valid?: true, changes: %{password: password}} = changeset
   ) do
-    change(changeset, Argon2.add_hash(password))
+    change(changeset, Argon2.hash_pwd_salt(password))
 
   end
 end
