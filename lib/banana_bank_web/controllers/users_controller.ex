@@ -3,7 +3,7 @@ defmodule BananaBankWeb.UsersController do
 
   alias BananaBank.Users.Create
 
-  def index(conn, params) do
+  def create(conn, params) do
     params
     |> Create.call()
     |> handle_response(conn)
@@ -12,12 +12,12 @@ defmodule BananaBankWeb.UsersController do
   defp handle_response({:ok, user}, conn) do
     conn
     |> put_status(:created)
-    |> render("user.json", user: user)
+    |> render(:create, user: user)
   end
-  defp handle_response({:error, _changeset}, conn) do
-    conn
-    |> put_status(:bad_request)
-    |> render("error.json", error: error)
-  end
+  # defp handle_response({:error, _changeset} = error, conn) do
+  #   conn
+  #   |> put_status(:bad_request)
+  #   |> render(:error, error: error)
+  # end
 
 end

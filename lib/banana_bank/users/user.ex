@@ -22,14 +22,15 @@ defmodule BananaBank.Users.User do
     |> validate_length(:cep, is: 8)
     |> validate_format(:email, ~r/@/)
     |> add_password_hash()
+    |> IO.inspect()
 
   end
 
+  defp add_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    password_hash = Argon2.hash_pwd_salt(password)
+    IO.inspect(password_hash)
+    IO.puts("password hash feito")
+    change(changeset, password_hash: password_hash)
+  end
   defp add_password_hash(changeset), do: changeset
-  defp add_password_hash(%Ecto.Changeset{
-    valid?: true, changes: %{password: password}} = changeset
-  ) do
-    change(changeset, Argon2.hash_pwd_salt(password))
-
-  end
 end
