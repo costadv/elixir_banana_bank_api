@@ -2,7 +2,7 @@ defmodule BananaBank.Users.Update do
   alias BananaBank.Users.User
   alias BananaBank.Repo
 
-  def call(%{"id" => id} = params) do
+  def call(%{"id" => _id} = params) do
      case length(Map.keys(params)) do
        1 -> {:error, :no_params}
        _ -> get_user(params)
@@ -19,7 +19,7 @@ defmodule BananaBank.Users.Update do
 
   defp update(user, params) do
     user
-    |> User.changeset_update(params)
+    |> User.changeset(params)
     |> Repo.update()
   end
 end

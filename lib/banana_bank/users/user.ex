@@ -15,25 +15,26 @@ defmodule BananaBank.Users.User do
       timestamps()
   end
 
-  def changeset_create(user \\ %__MODULE__{}, params) do
-    user
+  def changeset(params) do
+    %__MODULE__{}
     |> cast(params, @required_params_create)
-    |> validate_required(@required_params_create)
-    |> validate_length(:name, min: 3)
-    |> validate_length(:cep, is: 8)
-    |> validate_format(:email, ~r/@/)
+    |> do_validation(@required_params_create)
     |> add_password_hash()
-
   end
 
-  def changeset_update(user \\ %__MODULE__{}, params) do
+  def changeset(%__MODULE__{} = user, params) do
     user
-    |> cast(params, @required_params_update)
-    |> validate_required(@required_params_update)
+    |> cast(params, @required_params_create)
+    |> do_validation(@required_params_update)
+    |> add_password_hash()
+  end
+
+  defp do_validation(user, field) do
+    user
+    |> validate_required(field)
     |> validate_length(:name, min: 3)
     |> validate_length(:cep, is: 8)
     |> validate_format(:email, ~r/@/)
-
   end
 
   defp add_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
