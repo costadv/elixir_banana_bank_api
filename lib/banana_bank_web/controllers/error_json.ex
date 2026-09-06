@@ -31,6 +31,12 @@ defmodule BananaBankWeb.ErrorJSON do
       message: "Nothing to update"
     }
   end
+  def error(%{status: :cep_invalido}) do
+    %{
+      status: :bad_request,
+      message: "Invalid CEP provided."
+    }
+  end
   def error(%{changeset: changeset}) do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_errors/1)}
   end
