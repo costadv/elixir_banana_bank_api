@@ -13,6 +13,7 @@ defmodule BananaBankWeb.Router do
     get "/", WelcomeController, :index
 
     resources "/users", UsersController, only: @crud
+    post "/accounts", AccountsController, :create
   end
 
   # Enable LiveDashboard in development
