@@ -22,7 +22,7 @@ defmodule BananaBankWeb.ErrorJSON do
   def error(%{status: :not_found}) do
     %{
       status: :not_found,
-      message: "User not found"
+      message: "Resource not found"
     }
   end
   def error(%{status: :no_params}) do
@@ -41,6 +41,12 @@ defmodule BananaBankWeb.ErrorJSON do
     %{
       status: :bad_request,
       message: "Not enough funds to withdraw from account."
+    }
+  end
+  def error(%{status: :invalid_value}) do
+    %{
+      status: :bad_request,
+      message: "Invalid value provided."
     }
   end
   def error(%{changeset: changeset}) do

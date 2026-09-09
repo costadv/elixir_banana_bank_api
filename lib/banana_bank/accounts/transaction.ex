@@ -6,21 +6,23 @@ defmodule BananaBank.Accounts.Transaction do
   alias Ecto.Multi
 
   def call(source_account_id, target_account_id, value) do
-    with {source_account, target_account} <-
-      {check_account(source_account_id), check_account(target_account_id)} do
+    with {:ok, source_account} <- check_account(source_account_id),
+      {:ok, target_account} <- check_account(target_account_id),
+      {:ok, value} <- Decimal.cast(value) do
         Multi.new()
         |> withdraw(source_account, value)
         |> deposit(target_account, value)
         |> Repo.transact()
     else
       nil -> {:error, :not_found}
+      :error -> {:error, :invalid_value}
     end
   end
 
   defp check_account(id) do
     case Repo.get(Account, id) do
       nil -> nil
-      account -> account
+      account -> {:ok, account}
     end
   end
 
