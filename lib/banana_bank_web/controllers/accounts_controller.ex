@@ -14,11 +14,11 @@ defmodule BananaBankWeb.AccountsController do
     end
   end
 
-  def transaction(conn, %{"from_id" => from_id, "to_id" => to_id, "value" => value}) do
-    with {:ok, _result} <- Accounts.transaction(from_id, to_id, value) do
+  def transaction(conn, params) do
+    with {:ok, transaction} <- Accounts.transaction(params) do
       conn
       |> put_status(:ok)
-      |> render(:transaction, %{"from_id" => from_id, "to_id" => to_id, "value" => value})
+      |> render(:transaction, transaction: transaction)
     end
   end
 

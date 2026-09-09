@@ -31,7 +31,7 @@ defmodule BananaBankWeb.FallbackController do
     |> render(:error, status: :cep_invalido)
   end
 
-  def call(conn, {:error, :withdraw, _, _}) do
+  def call(conn, {:error, :withdraw}) do
     conn
     |> put_status(:bad_request)
     |> put_view(json: BananaBankWeb.ErrorJSON)

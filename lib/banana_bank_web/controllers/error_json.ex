@@ -28,7 +28,7 @@ defmodule BananaBankWeb.ErrorJSON do
   def error(%{status: :no_params}) do
     %{
       status: :no_params,
-      message: "Nothing to update"
+      message: "Invalid parameters provided."
     }
   end
   def error(%{status: :cep_invalido}) do

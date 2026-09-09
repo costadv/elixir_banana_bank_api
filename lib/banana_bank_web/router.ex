@@ -14,7 +14,7 @@ defmodule BananaBankWeb.Router do
 
     resources "/users", UsersController, only: @crud
     post "/accounts", AccountsController, :create
-    put "/accounts", AccountsController, :transaction
+    post "/accounts/transaction", AccountsController, :transaction
   end
 
   # Enable LiveDashboard in development

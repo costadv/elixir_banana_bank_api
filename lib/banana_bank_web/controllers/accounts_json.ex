@@ -7,8 +7,12 @@ defmodule BananaBankWeb.AccountsJSON do
     }
   end
 
-  def transaction(%{"from_id" => from_id, "to_id" => to_id, "value" => value}) do
-    %{message: "Transferred #{value} from account #{from_id} to account #{to_id} successfully."}
+  def transaction(%{transaction: %{withdraw: source_account, deposit: target_account}}) do
+    %{
+      message: "Transaction completed successfully.",
+      from_account: data(source_account),
+      to_account: data(target_account)
+    }
   end
 
   defp data(%Account{} = account) do
