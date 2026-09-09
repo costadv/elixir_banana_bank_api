@@ -37,6 +37,12 @@ defmodule BananaBankWeb.ErrorJSON do
       message: "Invalid CEP provided."
     }
   end
+  def error(%{status: :withdraw}) do
+    %{
+      status: :bad_request,
+      message: "Not enough funds to withdraw from account."
+    }
+  end
   def error(%{changeset: changeset}) do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_errors/1)}
   end

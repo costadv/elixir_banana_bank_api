@@ -13,7 +13,7 @@ defmodule BananaBank.Accounts.Transaction do
         |> deposit(target_account, value)
         |> Repo.transact()
     else
-    nil -> {:error, :not_found}
+      nil -> {:error, :not_found}
     end
   end
 
