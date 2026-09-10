@@ -5,7 +5,7 @@ defmodule BananaBankWeb.Token do
   @sign_salt "banana_bank_api"
 
   def sign(user) do
-    Token.sign(Endpoint, @sign_salt, %{user_id: user.id})
+    Token.sign(Endpoint, @sign_salt, %{"user_id" => user.id}, max_age: 86400)
   end
 
   # if needed, can be used like this to handle other cases.

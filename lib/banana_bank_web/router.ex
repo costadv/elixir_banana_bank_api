@@ -1,10 +1,12 @@
 defmodule BananaBankWeb.Router do
   use BananaBankWeb, :router
 
-  @crud [:create, :show, :update, :delete]
-
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :auth do
+    plug BananaBankWeb.Plugs.Auth
   end
 
   scope "/api", BananaBankWeb do
@@ -12,12 +14,18 @@ defmodule BananaBankWeb.Router do
 
     get "/", WelcomeController, :index
 
-    resources "/users", UsersController, only: @crud
+    resources "/users", UsersController, only: [:create]
+
+    post "/users/login", UsersController, :login
+  end
+
+  scope "/api", BananaBankWeb do
+    pipe_through [:api, :auth]
+
+    resources "/users", UsersController, only: [:show, :update, :delete]
 
     post "/accounts", AccountsController, :create
     post "/accounts/transaction", AccountsController, :transaction
-
-    post "/users/login", UsersController, :login
   end
 
   # Enable LiveDashboard in development
