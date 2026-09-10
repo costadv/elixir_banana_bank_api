@@ -45,4 +45,11 @@ defmodule BananaBankWeb.FallbackController do
     |> render(:error, status: :invalid_value)
   end
 
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(json: BananaBankWeb.ErrorJSON)
+    |> render(:error, status: :unauthorized)
+  end
+
 end

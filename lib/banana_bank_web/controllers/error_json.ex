@@ -49,6 +49,12 @@ defmodule BananaBankWeb.ErrorJSON do
       message: "Invalid value provided."
     }
   end
+  def error(%{status: :unauthorized}) do
+    %{
+      status: :bad_request,
+      message: "Unauthorized token. Verify password and try again."
+    }
+  end
   def error(%{changeset: changeset}) do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_errors/1)}
   end
